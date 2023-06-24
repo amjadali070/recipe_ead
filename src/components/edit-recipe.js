@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-export default class EditTodo extends Component {
+export default class EditRecipe extends Component {
 
     constructor(props) {
         super(props);
 
         this.onChangeDescription = this.onChangeDescription.bind(this);
-        this.onChangeIngredients = this.onChangeInstructions.bind(this);
+        this.onChangeIngredients = this.onChangeIngredients.bind(this);
         this.onChangeInstructions = this.onChangeInstructions.bind(this);
   
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
-            todo_description: '',
-            todo_responsible: '',
-            todo_priority: '',
-            todo_completed: false
+            description: '',
+            ingredients: '',
+            instructions: '',
+            
         }
     }
 
@@ -24,10 +24,9 @@ export default class EditTodo extends Component {
         axios.get('http://localhost:4000/todos/'+this.props.match.params.id)
             .then(response => {
                 this.setState({
-                    todo_description: response.data.todo_description,
-                    todo_responsible: response.data.todo_responsible,
-                    todo_priority: response.data.todo_priority,
-                    todo_completed: response.data.todo_completed
+                    todo_description: response.data.description,
+                    todo_responsible: response.data.ingredients,
+                    todo_priority: response.data.instructions
                 })   
             })
             .catch(function (error) {
@@ -37,35 +36,29 @@ export default class EditTodo extends Component {
 
     onChangeTodoDescription(e) {
         this.setState({
-            todo_description: e.target.value
+            description: e.target.value
         });
     }
 
     onChangeTodoResponsible(e) {
         this.setState({
-            todo_responsible: e.target.value
+            ingredients: e.target.value
         });
     }
 
     onChangeTodoPriority(e) {
         this.setState({
-            todo_priority: e.target.value
-        });
-    }
-
-    onChangeTodoCompleted(e) {
-        this.setState({
-            todo_completed: !this.state.todo_completed
+            instructions: e.target.value
         });
     }
 
     onSubmit(e) {
         e.preventDefault();
         const obj = {
-            todo_description: this.state.todo_description,
-            todo_responsible: this.state.todo_responsible,
-            todo_priority: this.state.todo_priority,
-            todo_completed: this.state.todo_completed
+            description: this.state.description,
+            ingredients: this.state.ingredients,
+            instructions: this.state.instructions
+           
         };
         console.log(obj);
         axios.post('http://localhost:4000/todos/update/'+this.props.match.params.id, obj)
@@ -105,20 +98,6 @@ export default class EditTodo extends Component {
                                 value={this.state.instructions}
                                 onChange={this.onChangeInstructions}
                                 />
-                    </div>
-                           
-                                        <div className="form-check">
-                        <input  className="form-check-input"
-                                id="completedCheckbox"
-                                type="checkbox"
-                                name="completedCheckbox"
-                                onChange={this.onChangeTodoCompleted}
-                                checked={this.state.todo_completed}
-                                value={this.state.todo_completed}
-                                />
-                        <label className="form-check-label" htmlFor="completedCheckbox">
-                            Completed
-                        </label>                        
                     </div>
 
                     <br />

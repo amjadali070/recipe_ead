@@ -3,10 +3,10 @@ import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import CreateRecipe from "./components/create-recipe";
-import EditTodo from "./components/edit-todo.component";
-import TodosList from "./components/todos-list.component";
-
+import EditRecipe from "./components/edit-recipe";
+import RecipesList from "./components/list-recipe";
 import logo from "./logo.svg";
+
 
 const App = () => {
   return (
@@ -34,8 +34,8 @@ const App = () => {
         </nav>
         <br />
         <Routes>
-          <Route path="/" element={<TodosList />} />
-          <Route path="/edit/:id" element={<EditTodo />} />
+          <Route path="/" element={<RecipesList />} />
+          <Route path="/edit/:id" element={<EditRecipe />} />
           <Route path="/create" element={<CreateRecipe />} />
         </Routes>
       </div>

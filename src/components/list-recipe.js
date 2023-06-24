@@ -2,37 +2,37 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-const Todo = props => (
+const Recipe = props => (
     <tr>
-        <td>{props.todo.todo_description}</td>
-        <td>{props.todo.todo_responsible}</td>
-        <td>{props.todo.todo_priority}</td>
+        <td>{props.Recipe.description}</td>
+        <td>{props.Recipe.Ingridents}</td>
+        <td>{props.Recipe.Instructions}</td>
         <td>
-            <Link to={"/edit/"+props.todo._id}>Edit</Link>
+            <Link to={"/edit/"+props.Recipe._id}>Edit</Link>
         </td>
     </tr>
 )
 
-export default class TodosList extends Component {
+export default class RecipesList extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {todos: []};
+        this.state = {Recipes: []};
     }
 
     componentDidMount() {
-        axios.get('http://localhost:4000/todos/')
+        axios.get('http://localhost:4000/recipes/')
             .then(response => {
-                this.setState({ todos: response.data });
+                this.setState({ Recipes: response.data });
             })
             .catch(function (error){
                 console.log(error);
             })
     }
 
-    todoList() {
-        return this.state.todos.map(function(currentTodo, i){
-            return <Todo todo={currentTodo} key={i} />;
+    RecipesList() {
+        return this.state.Recipes.map(function(currentRecipe, i){
+            return <Recipe Recipe={currentRecipe} key={i} />;
         })
     }
 
@@ -50,7 +50,7 @@ export default class TodosList extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        { this.todoList() }
+                        { this.RecipeList() }
                     </tbody>
                 </table>
             </div>
